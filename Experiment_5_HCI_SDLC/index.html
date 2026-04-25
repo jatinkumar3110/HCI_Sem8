@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 5: HCI in SDLC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 HCI Principles in SDLC</h1>
+            <p>A Mini Note Manager Demonstrating User-Centered Design</p>
+        </div>
+
+        <!-- PHASE SELECTOR -->
+        <div class="phases">
+            <div class="phase active" onclick="showPhase('requirements')">
+                <div class="phase-title">📋 Requirements</div>
+                <div class="phase-desc">User needs & HCI goals for the app</div>
+            </div>
+            <div class="phase" onclick="showPhase('design')">
+                <div class="phase-title">🎨 Design</div>
+                <div class="phase-desc">UI layout & interaction design</div>
+            </div>
+            <div class="phase" onclick="showPhase('implementation')">
+                <div class="phase-title">💻 Implementation</div>
+                <div class="phase-desc">Functional note manager app</div>
+            </div>
+            <div class="phase" onclick="showPhase('evaluation')">
+                <div class="phase-title">⭐ Evaluation</div>
+                <div class="phase-desc">User feedback & usability testing</div>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="content">
+            <!-- PHASE 1: REQUIREMENTS -->
+            <div id="requirements" class="phase-content active">
+                <div class="section">
+                    <div class="section-title">📋 User Requirements</div>
+                    <div class="requirement">
+                        <strong>Usability:</strong> Users should easily create, view, and delete notes without training
+                    </div>
+                    <div class="requirement">
+                        <strong>Accessibility:</strong> Clear labels, readable fonts, high contrast colors
+                    </div>
+                    <div class="requirement">
+                        <strong>Efficiency:</strong> Complete a note task in less than 30 seconds
+                    </div>
+                    <div class="requirement">
+                        <strong>Consistency:</strong> Same buttons, colors, and interactions throughout the app
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🎯 HCI Principles Applied</div>
+                    <div class="requirement">
+                        <strong>Visibility:</strong> Status of notes clearly shown
+                    </div>
+                    <div class="requirement">
+                        <strong>Feedback:</strong> Confirmation messages for actions
+                    </div>
+                    <div class="requirement">
+                        <strong>Simplicity:</strong> Minimal, intuitive interface design
+                    </div>
+                    <div class="requirement">
+                        <strong>Control:</strong> Users can undo/delete any action
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 2: DESIGN -->
+            <div id="design" class="phase-content">
+                <div class="section">
+                    <div class="section-title">🎨 UI Design Principles</div>
+                    <div class="requirement">
+                        <strong>Layout:</strong> Vertical stack with clear sections (List, Input, Actions)
+                    </div>
+                    <div class="requirement">
+                        <strong>Color Scheme:</strong> Blue (#667eea) for primary actions, Red (#e74c3c) for delete
+                    </div>
+                    <div class="requirement">
+                        <strong>Typography:</strong> Bold headers, regular text for content, smaller text for hints
+                    </div>
+                    <div class="requirement">
+                        <strong>Spacing:</strong> 15px margins between elements for visual hierarchy
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">⚙️ Interaction Design</div>
+                    <div class="requirement">
+                        <strong>Buttons:</strong> Clear action labels (Add, Delete, Save)
+                    </div>
+                    <div class="requirement">
+                        <strong>Forms:</strong> Simple inputs with placeholders and labels
+                    </div>
+                    <div class="requirement">
+                        <strong>Feedback:</strong> Alerts confirm successful actions
+                    </div>
+                    <div class="requirement">
+                        <strong>Error Handling:</strong> Validation before adding notes
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 3: IMPLEMENTATION -->
+            <div id="implementation" class="phase-content">
+                <div class="section">
+                    <div class="section-title">💻 Working Note Manager</div>
+                    
+                    <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="margin-bottom: 10px;">
+                            <input type="text" id="noteInput" placeholder="Write a note..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; font-size: 14px;">
+                            <button class="btn" onclick="addNote()">➕ Add Note</button>
+                        </div>
+
+                        <div style="background: white; border: 1px solid #ddd; border-radius: 5px; padding: 10px; min-height: 100px;">
+                            <div id="noteList" style="color: #999; text-align: center; padding: 20px;">
+                                No notes yet. Add one to get started!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">✅ Implementation Features</div>
+                    <div class="requirement">
+                        <strong>Storage:</strong> Notes saved in browser localStorage
+                    </div>
+                    <div class="requirement">
+                        <strong>CRUD Operations:</strong> Create, Read, Update, Delete notes
+                    </div>
+                    <div class="requirement">
+                        <strong>Timestamps:</strong> Each note shows when it was created
+                    </div>
+                    <div class="requirement">
+                        <strong>Responsive:</strong> Works on desktop and mobile devices
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 4: EVALUATION -->
+            <div id="evaluation" class="phase-content">
+                <div class="section">
+                    <div class="section-title">⭐ User Feedback & Evaluation</div>
+                    
+                    <div class="feedback-form">
+                        <div class="feedback-item">
+                            <label>How easy was it to add a note?</label>
+                            <div class="star-rating" id="easeRating">
+                                <span class="star" onclick="rateStar(this, 'ease')">★</span>
+                                <span class="star" onclick="rateStar(this, 'ease')">★</span>
+                                <span class="star" onclick="rateStar(this, 'ease')">★</span>
+                                <span class="star" onclick="rateStar(this, 'ease')">★</span>
+                                <span class="star" onclick="rateStar(this, 'ease')">★</span>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item">
+                            <label>How clear were the buttons and labels?</label>
+                            <div class="star-rating" id="clarityRating">
+                                <span class="star" onclick="rateStar(this, 'clarity')">★</span>
+                                <span class="star" onclick="rateStar(this, 'clarity')">★</span>
+                                <span class="star" onclick="rateStar(this, 'clarity')">★</span>
+                                <span class="star" onclick="rateStar(this, 'clarity')">★</span>
+                                <span class="star" onclick="rateStar(this, 'clarity')">★</span>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item">
+                            <label>Additional Comments:</label>
+                            <textarea id="feedback" placeholder="Share your thoughts..."></textarea>
+                        </div>
+
+                        <button class="btn" onclick="submitFeedback()">Submit Feedback</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📊 Evaluation Metrics</div>
+                    <div class="summary">
+                        <strong>✓ Task Completion:</strong> Can users complete all tasks?
+                    </div>
+                    <div class="summary" style="margin-top: 10px;">
+                        <strong>✓ Error Rate:</strong> How many mistakes do users make?
+                    </div>
+                    <div class="summary" style="margin-top: 10px;">
+                        <strong>✓ Satisfaction:</strong> Are users happy with the interface?
+                    </div>
+                    <div class="summary" style="margin-top: 10px;">
+                        <strong>✓ Efficiency:</strong> How quickly can users complete tasks?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 4: To-Do List Wireframe-to-Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="sidebar">
+            <h3 style="margin-bottom: 20px;">📝 App Menu</h3>
+            <button class="nav-btn active" onclick="showScreen('home')">🏠 Task List</button>
+            <button class="nav-btn" onclick="showScreen('add')">➕ Add Task</button>
+            <button class="nav-btn" onclick="showScreen('settings')">⚙️ Settings</button>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="content">
+            <!-- HOME SCREEN -->
+            <div id="home" class="screen active">
+                <h1>📋 My Tasks</h1>
+                <div class="wireframe-box">
+                    <div class="wireframe-title">Wireframe: Task List Container</div>
+                    <div class="task-list" id="taskList">
+                        <p style="color: #999; text-align: center;">No tasks yet. Add one to get started!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADD TASK SCREEN -->
+            <div id="add" class="screen">
+                <h1>➕ Add New Task</h1>
+                <div class="wireframe-box">
+                    <div class="wireframe-title">Wireframe: Add Task Form</div>
+                    <div class="form">
+                        <div class="form-group">
+                            <label>Task Title:</label>
+                            <input type="text" id="taskTitle" placeholder="Enter task title...">
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <textarea id="taskDesc" placeholder="Add task details..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Priority:</label>
+                            <select id="priority" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                                <option>Low</option>
+                                <option selected>Medium</option>
+                                <option>High</option>
+                            </select>
+                        </div>
+                        <button onclick="addTask()">✓ Add Task</button>
+                        <button style="background: #f0f0f0; color: #333;" onclick="clearForm()">Clear</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS SCREEN -->
+            <div id="settings" class="screen">
+                <h1>⚙️ Settings</h1>
+                <div class="wireframe-box">
+                    <div class="wireframe-title">Wireframe: Settings Panel</div>
+                    <div class="settings">
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Enable notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span>Dark mode</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox">
+                                <span>Show completed tasks</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <button onclick="clearAllTasks()" style="width: 100%; background: #e74c3c; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">🗑️ Clear All Tasks</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

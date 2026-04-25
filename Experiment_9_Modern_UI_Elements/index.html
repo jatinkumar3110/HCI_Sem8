@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 9: Modern UI Elements</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="device-toolbar">
+    <button class="device-btn active" data-device="desktop">💻 Desktop</button>
+    <button class="device-btn" data-device="laptop">🖥️ Laptop</button>
+    <button class="device-btn" data-device="tablet">📱 Tablet</button>
+    <button class="device-btn" data-device="android">🤖 Android</button>
+    <button class="device-btn" data-device="iphone">📲 iPhone</button>
+  </div>
+  <div class="main-wrapper">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>🧩 Modern UI Elements</h1>
+      </div>
+      <div class="header-right">
+        <button id="theme-toggle" class="theme-btn">🌙 Dark Mode</button>
+      </div>
+    </header>
+    <div class="app-container" id="app-container">
+      <nav class="sidebar">
+        <button class="nav-btn active" data-tab="kanban">Kanban Board</button>
+        <button class="nav-btn" data-tab="edit">Inline Editing</button>
+        <button class="nav-btn" data-tab="modal">Modal Dialog</button>
+        <button class="nav-btn" data-tab="analytics">Analytics</button>
+        <button class="nav-btn" data-tab="settings">Settings</button>
+      </nav>
+      <main class="content">
+        <!-- Kanban Board Tab -->
+        <div class="tab-content active" id="kanban-tab">
+          <div class="kanban-controls">
+            <input type="text" id="search-cards" class="search-input" placeholder="🔍 Search cards..." autocomplete="off">
+            <select id="priority-filter" class="filter-select">
+              <option value="">All Priorities</option>
+              <option value="high">🔴 High</option>
+              <option value="medium">🟡 Medium</option>
+              <option value="low">🟢 Low</option>
+            </select>
+          </div>
+          <div class="board">
+            <div class="column" data-status="todo">
+              <h2>To Do</h2>
+              <ul class="card-list" id="todo-list" aria-label="To Do"></ul>
+            </div>
+            <div class="column" data-status="doing">
+              <h2>Doing</h2>
+              <ul class="card-list" id="doing-list" aria-label="Doing"></ul>
+            </div>
+            <div class="column" data-status="done">
+              <h2>Done</h2>
+              <ul class="card-list" id="done-list" aria-label="Done"></ul>
+            </div>
+          </div>
+          <button id="add-card-btn" class="btn primary">+ Add Card</button>
+        </div>
+
+        <!-- Inline Editing Tab -->
+        <div class="tab-content" id="edit-tab">
+          <section class="card card-full">
+            <h2>Direct Inline Editing</h2>
+            <p class="card-desc">Double-click any item to edit it</p>
+            <ul id="editable-list"></ul>
+          </section>
+        </div>
+
+        <!-- Modal Dialog Tab -->
+        <div class="tab-content" id="modal-tab">
+          <section class="card card-full">
+            <h2>Modal Dialog Example</h2>
+            <p class="card-desc">Click the button to open a modal</p>
+            <button id="open-modal-btn" class="btn primary">Open Modal</button>
+          </section>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analytics-tab">
+          <section class="card card-full">
+            <h2>Board Analytics</h2>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">Total Cards</div>
+                <div class="stat-value" id="stat-total">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">To Do</div>
+                <div class="stat-value" id="stat-todo">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Doing</div>
+                <div class="stat-value" id="stat-doing">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Done</div>
+                <div class="stat-value" id="stat-done">0</div>
+              </div>
+            </div>
+            <div class="charts-grid">
+              <div class="chart-container">
+                <h3>Board Distribution</h3>
+                <canvas id="board-chart"></canvas>
+              </div>
+              <div class="chart-container">
+                <h3>Progress</h3>
+                <canvas id="progress-chart"></canvas>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settings-tab">
+          <section class="card card-full">
+            <h2>Settings</h2>
+            <div class="settings-group">
+              <div class="setting-item">
+                <div class="setting-label">Reset Board</div>
+                <button id="reset-board-btn" class="btn danger">Reset All Cards</button>
+              </div>
+              <div class="setting-item">
+                <div class="setting-label">Export Data</div>
+                <button id="export-btn" class="btn secondary">Export</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <h3 id="modal-title">Add New Card</h3>
+      <form id="modal-form">
+        <input type="text" id="modal-task-title" placeholder="Card Title" required autocomplete="off">
+        <select id="modal-priority" class="modal-select">
+          <option value="low">🟢 Low Priority</option>
+          <option value="medium" selected>🟡 Medium Priority</option>
+          <option value="high">🔴 High Priority</option>
+        </select>
+        <div class="modal-buttons">
+          <button type="submit" class="btn primary">Add</button>
+          <button type="button" id="close-modal-btn" class="btn secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

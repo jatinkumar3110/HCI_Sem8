@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exp 10: Smart Student Study Planner (HCI)</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- HCI Analytics & Device Control Panel -->
+  <div class="hci-control-panel">
+    <!-- Device Preview Toolbar -->
+    <div class="device-toolbar">
+      <span class="toolbar-label">Device Preview:</span>
+      <button class="device-btn active" data-device="desktop" title="Desktop (1440×900)">🖥️ Desktop</button>
+      <button class="device-btn" data-device="laptop" title="Laptop (1280×800)">💻 Laptop</button>
+      <button class="device-btn" data-device="tablet" title="iPad (768×1024)">📱 Tablet</button>
+      <button class="device-btn" data-device="android" title="Android (412×915)">🤖 Android</button>
+      <button class="device-btn" data-device="iphone" title="iPhone (375×812)">🍎 iPhone</button>
+      
+      <span class="separator">|</span>
+      
+      <button id="device-rotate-btn" class="device-btn" title="Rotate device (mobile only)">🔄 Rotate</button>
+      <button id="device-fullscreen-btn" class="device-btn" title="Fullscreen mode">⛶ Fullscreen</button>
+      
+      <span class="separator">|</span>
+      
+      <button id="usability-test-btn" class="device-btn" title="Usability testing mode (track interactions)">🧪 Usability Test</button>
+      <span id="usability-indicator" class="usability-indicator" style="display: none;">Recording...</span>
+      
+      <span class="separator">|</span>
+      
+      <button id="analytics-toggle-btn" class="device-btn" title="Show/hide analytics heatmap">📊 Analytics</button>
+    </div>
+  </div>
+
+  <!-- Device Preview Container (Realistic Device Frame) -->
+  <div class="device-preview-wrapper">
+    <!-- Device Frame with Hardware Bezel -->
+    <div class="device-preview-container" id="device-preview-container">
+      <!-- Browser Chrome UI Simulation -->
+      <div class="browser-chrome">
+        <div class="chrome-toolbar">
+          <div class="chrome-buttons">
+            <button class="chrome-btn minimize" title="Minimize">−</button>
+            <button class="chrome-btn maximize" title="Maximize">□</button>
+            <button class="chrome-btn close" title="Close">✕</button>
+          </div>
+          <div class="chrome-address-bar">
+            <span class="protocol">https://</span>
+            <span class="domain">studyplanner.hci.app</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Device Frame (with realistic bezel/hardware styling) -->
+      <div class="device-frame" id="device-frame">
+        <div class="device-notch" id="device-notch"></div>
+        <div class="device-screen">
+          <!-- Application Content -->
+          <div id="app-container" class="app-container desktop-view">
+    <!-- Header with Navigation and Theme Toggle -->
+    <header class="header">
+      <div class="header-content">
+        <h1 class="app-title"><span class="icon">📚</span> Study Planner</h1>
+        <nav class="main-nav" role="navigation" aria-label="Main tabs">
+          <button class="nav-btn active" data-tab="dashboard" aria-controls="dashboard" aria-selected="true">📊 Dashboard</button>
+          <button class="nav-btn" data-tab="tasks" aria-controls="tasks" aria-selected="false">📋 Tasks</button>
+          <button class="nav-btn" data-tab="analytics" aria-controls="analytics" aria-selected="false">📈 Analytics</button>
+          <button class="nav-btn" data-tab="settings" aria-controls="settings" aria-selected="false">⚙️ Settings</button>
+        </nav>
+        <div class="header-actions">
+          <button id="default-preset-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Load default demo preset">✨ Default Preset</button>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Dashboard Tab -->
+      <section id="dashboard" class="tab-panel active" role="tabpanel" aria-labelledby="dashboard-tab">
+        <div class="page-header">
+          <h2>Welcome Back! 👋</h2>
+          <p class="subtitle">Here's your productivity overview for today.</p>
+        </div>
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-content">
+              <div class="stat-label">Tasks Due Today</div>
+              <div class="stat-value" id="tasks-today">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-content">
+              <div class="stat-label">Completed Today</div>
+              <div class="stat-value" id="completed-today">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📌</div>
+            <div class="stat-content">
+              <div class="stat-label">Total Tasks</div>
+              <div class="stat-value" id="total-tasks">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div class="stat-label">Productivity Rate</div>
+              <div class="stat-value" id="productivity-rate">0%</div>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Productivity Progress</h3>
+          <div class="progress-widget">
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="dashboard-progress" style="width: 0%"></div>
+            </div>
+            <div class="progress-text">
+              <span id="progress-done">0</span> / <span id="progress-total">0</span> done
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Upcoming Tasks</h3>
+          <div id="upcoming-tasks" class="tasks-list"></div>
+        </div>
+      </section>
+
+      <!-- Tasks Tab (Kanban Board) -->
+      <section id="tasks" class="tab-panel" role="tabpanel" aria-labelledby="tasks-tab">
+        <div class="page-header">
+          <h2>Task Board 📋</h2>
+          <p class="subtitle">Manage your tasks across different stages.</p>
+        </div>
+        <div class="kanban-board">
+          <div class="kanban-column" data-status="todo">
+            <div class="column-header">
+              <h3>📝 To Do</h3>
+              <span class="task-count" id="todo-count">0</span>
+            </div>
+            <ul class="task-list" id="todo-list" role="list"></ul>
+          </div>
+          <div class="kanban-column" data-status="inprogress">
+            <div class="column-header">
+              <h3>⚡ In Progress</h3>
+              <span class="task-count" id="inprogress-count">0</span>
+            </div>
+            <ul class="task-list" id="inprogress-list" role="list"></ul>
+          </div>
+          <div class="kanban-column" data-status="done">
+            <div class="column-header">
+              <h3>✅ Done</h3>
+              <span class="task-count" id="done-count">0</span>
+            </div>
+            <ul class="task-list" id="done-list" role="list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Tab -->
+      <section id="analytics" class="tab-panel" role="tabpanel" aria-labelledby="analytics-tab">
+        <div class="page-header">
+          <h2>Analytics 📈</h2>
+          <p class="subtitle">Track your productivity and task metrics.</p>
+        </div>
+        <div class="analytics-grid">
+          <div class="chart-card">
+            <h3>Task Completion Rate</h3>
+            <canvas id="completion-chart" width="300" height="200"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Task Distribution</h3>
+            <canvas id="distribution-chart" width="300" height="200"></canvas>
+          </div>
+          <div class="chart-card wide">
+            <h3>Weekly Productivity</h3>
+            <canvas id="weekly-chart" width="600" height="200"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Tab -->
+      <section id="settings" class="tab-panel" role="tabpanel" aria-labelledby="settings-tab">
+        <div class="page-header">
+          <h2>Settings ⚙️</h2>
+          <p class="subtitle">Customize your planner experience.</p>
+        </div>
+        <div class="settings-section">
+          <h3>Appearance</h3>
+          <label class="setting-item">
+            <span>Dark Mode</span>
+            <input type="checkbox" id="settings-dark-mode" class="toggle-checkbox">
+          </label>
+          <label class="setting-item">
+            <span>Enable Animations</span>
+            <input type="checkbox" id="settings-animations" class="toggle-checkbox" checked>
+          </label>
+        </div>
+        <div class="settings-section">
+          <h3>Data Management</h3>
+          <button id="export-data-btn" class="btn btn-secondary">📥 Export Tasks</button>
+          <button id="clear-tasks-btn" class="btn btn-danger">🗑️ Clear All Tasks</button>
+          <button id="reset-stats-btn" class="btn btn-danger">🔄 Reset Analytics</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add/Edit Task Modal -->
+  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <button class="close-btn" aria-label="Close modal">&times;</button>
+      <h2 id="modal-title">Add New Task</h2>
+      <form id="task-form">
+        <div class="form-group">
+          <label for="task-title">Task Title <span class="required">*</span></label>
+          <input type="text" id="task-title" placeholder="Enter task title" required>
+        </div>
+        <div class="form-group">
+          <label for="task-desc">Description</label>
+          <textarea id="task-desc" placeholder="Add a detailed description (optional)"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-due">Due Date <span class="required">*</span></label>
+            <input type="date" id="task-due" required>
+          </div>
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="low">🟢 Low</option>
+              <option value="normal" selected>🟡 Normal</option>
+              <option value="high">🔴 High</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save Task</button>
+          <button type="button" class="btn btn-secondary" id="cancel-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+        </div> <!-- end device-screen -->
+      </div> <!-- end device-frame -->
+
+      <!-- HCI Analytics Overlay (Heatmap & Metrics) -->
+      <div class="hci-analytics-overlay" id="hci-analytics-overlay" style="display: none;">
+        <div class="heatmap-canvas-wrapper">
+          <canvas id="heatmap-canvas"></canvas>
+        </div>
+        <div class="analytics-metrics-panel">
+          <div class="metrics-header">
+            <h3>📊 UX Metrics</h3>
+            <button class="metrics-close">✕</button>
+          </div>
+          <div class="metrics-content">
+            <div class="metric-item">
+              <span class="metric-label">Interactions</span>
+              <span class="metric-value" id="metric-interactions">0</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Click Density</span>
+              <span class="metric-value" id="metric-density">0</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Session Time</span>
+              <span class="metric-value" id="metric-session">0s</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Task Completion</span>
+              <span class="metric-value" id="metric-completion">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resize Handle (for device frame) -->
+      <div class="device-resize-handle" id="device-resize-handle">⟲</div>
+    </div> <!-- end device-preview-container -->
+  </div> <!-- end device-preview-wrapper -->
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="alert"></div>
+
+  <!-- Floating Action Button -->
+  <button id="add-task-btn" class="fab" aria-label="Add new task">➕</button>
+
+  <!-- Pomodoro Timer Widget -->
+  <div id="pomodoro-widget" class="pomodoro-widget" style="display: none;">
+    <div class="pomodoro-display">
+      <span class="pomodoro-time">25:00</span>
+      <span class="pomodoro-status">Focus</span>
+    </div>
+    <div class="pomodoro-controls">
+      <button class="pomodoro-btn" id="pomodoro-start">▶</button>
+      <button class="pomodoro-btn" id="pomodoro-reset">↻</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+  <script src="app.js?v=20260324-3"></script>
+</body>
+</html>

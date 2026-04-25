@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 7: Cognitive Model</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-left">
+            <p class="eyebrow">Experiment 7 • Mapped with CO3, CO4</p>
+            <h1>Cognitive Modeling for Task Efficiency</h1>
+            <p class="subtitle">Use KLM and GOMS to estimate task time, analyze cognitive effort, and recommend improvements.</p>
+            <div class="task-select">
+                <label>Selected Task</label>
+                <select id="taskSelect">
+                    <option value="Rename a file">Rename a file</option>
+                    <option value="Send an email">Send an email</option>
+                    <option value="Delete a message">Delete a message</option>
+                    <option value="Upload a document">Upload a document</option>
+                </select>
+                <input id="taskName" type="text" placeholder="Or enter custom task">
+            </div>
+            <div class="sample-row">
+                <div>
+                    <label>Sample Preset</label>
+                    <select id="sampleSelect">
+                        <option value="">Select sample preset</option>
+                        <option value="renameFile">Rename a file (KLM + GOMS)</option>
+                        <option value="deleteMessage">Delete a message (KLM + GOMS)</option>
+                        <option value="sendEmail">Send an email (KLM + GOMS)</option>
+                        <option value="uploadDocument">Upload a document (KLM + GOMS)</option>
+                        <option value="createNote">Create a note (KLM + GOMS)</option>
+                    </select>
+                </div>
+                <button class="ghost" id="applySampleBtn" type="button">Apply Sample</button>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="stat-card">
+                <span>Predicted Time</span>
+                <strong id="totalTime">0.00s</strong>
+            </div>
+            <div class="stat-card">
+                <span>Total Operators</span>
+                <strong id="totalOps">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Efficiency</span>
+                <strong id="efficiencyBadge">--</strong>
+            </div>
+            <div class="stat-card">
+                <span>Model</span>
+                <strong>KLM</strong>
+            </div>
+            <button class="primary" id="calcBtn">Recalculate</button>
+            <button class="ghost" id="resetBtn">Reset Model</button>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="section grid">
+            <div class="panel">
+                <h2>KLM Operator Builder</h2>
+                <p class="muted">Build the operator sequence and estimate completion time.</p>
+
+                <div class="builder">
+                    <select id="operatorSelect">
+                        <option value="K">K - Keystroke (0.28s)</option>
+                        <option value="P">P - Pointing (1.10s)</option>
+                        <option value="H">H - Homing (0.40s)</option>
+                        <option value="M">M - Mental (1.35s)</option>
+                        <option value="R">R - System response (1.00s)</option>
+                    </select>
+                    <input id="operatorNote" type="text" placeholder="Optional note (e.g., press F2)">
+                    <button class="primary" id="addOpBtn">Add Operator</button>
+                </div>
+                <p class="operator-desc" id="operatorDesc">K: Keystroke (typing or pressing a key).</p>
+
+                <div class="op-list" id="opList"></div>
+                <div class="list-actions">
+                    <button class="ghost" id="removeLastBtn">Remove Last</button>
+                    <button class="ghost" id="clearAllBtn">Clear All</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>GOMS Breakdown</h2>
+                <p class="muted">Document the goal, operators, methods, and selection rules.</p>
+                <div class="goms-grid">
+                    <div class="goms-block">
+                        <label>Goal</label>
+                        <textarea id="gomsGoal" rows="3" placeholder="Example: Rename a file in a file manager"></textarea>
+                    </div>
+                    <div class="goms-block">
+                        <label>Operators</label>
+                        <textarea id="gomsOps" rows="4" placeholder="Example: Select file, press F2, type new name, press Enter"></textarea>
+                    </div>
+                    <div class="goms-block">
+                        <label>Methods</label>
+                        <textarea id="gomsMethods" rows="4" placeholder="Example: Use keyboard shortcut; alternative: right-click menu"></textarea>
+                    </div>
+                    <div class="goms-block">
+                        <label>Selection Rules</label>
+                        <textarea id="gomsRules" rows="3" placeholder="Example: If hands on keyboard, use F2; otherwise use context menu"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="panel full">
+                <h2>Analysis and Suggestions</h2>
+                <div class="analysis-grid">
+                    <div>
+                        <label>Predicted Task Time</label>
+                        <input id="predictedTime" type="text" readonly>
+                    </div>
+                    <div>
+                        <label>Efficiency Notes</label>
+                        <textarea id="efficiencyNotes" rows="5" placeholder="Explain cognitive effort, bottlenecks, or delays"></textarea>
+                    </div>
+                    <div>
+                        <label>Improvement Suggestions</label>
+                        <textarea id="suggestionNotes" rows="5" placeholder="Recommend design changes (e.g., add shortcut, reduce steps)"></textarea>
+                    </div>
+                </div>
+                <p class="comparison-hint">Try an alternative method to reduce task time and compare the efficiency scores.</p>
+                <div class="report-actions">
+                    <button class="primary" id="reportBtn">Generate Summary</button>
+                    <button class="ghost" id="copyBtn">Copy Summary</button>
+                </div>
+                <textarea id="summaryOutput" rows="12" placeholder="Your summary will appear here."></textarea>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="panel full">
+                <h2>Learning Outcomes</h2>
+                <ul class="learn-list">
+                    <li>Fundamentals of cognitive modeling in HCI.</li>
+                    <li>How to use GOMS and KLM to analyze user performance.</li>
+                    <li>Importance of user task analysis for interface design.</li>
+                    <li>Quantitative methods to evaluate usability and efficiency.</li>
+                    <li>Applying theoretical models to real-world software systems.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <span>Jatin Kumar 22BAI71254</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

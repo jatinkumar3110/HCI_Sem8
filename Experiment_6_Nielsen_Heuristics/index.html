@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 6: Nielsen Heuristics Evaluation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">Experiment 6 • Mapped with CO3</p>
+            <h1>Nielsen Heuristics Evaluation</h1>
+            <p class="subtitle">Evaluate a system using Jakob Nielsen's 10 usability heuristics and generate a structured report.</p>
+            <div class="hero-meta">
+                <div>
+                    <span class="meta-label">Selected System</span>
+                    <div class="meta-input">
+                        <select id="systemSelect">
+                            <option value="College Portal">College Portal</option>
+                            <option value="Email Client">Email Client</option>
+                            <option value="Food Delivery App">Food Delivery App</option>
+                            <option value="Banking App">Banking App</option>
+                            <option value="Learning LMS">Learning LMS</option>
+                        </select>
+                        <input id="systemName" type="text" placeholder="Or enter custom system name">
+                    </div>
+                </div>
+                <div>
+                    <span class="meta-label">Evaluator</span>
+                    <input id="evaluator" type="text" placeholder="Your name" value="Jatin Kumar">
+                </div>
+            </div>
+            <div class="sample-row">
+                <div>
+                    <span class="meta-label">Sample Fill</span>
+                    <select id="sampleSelect">
+                        <option value="">Select sample preset</option>
+                        <option value="collegePortal">College Portal (Sample)</option>
+                        <option value="emailClient">Email Client (Sample)</option>
+                        <option value="foodDelivery">Food Delivery App (Sample)</option>
+                        <option value="bankingApp">Banking App (Sample)</option>
+                        <option value="learningLms">Learning LMS (Sample)</option>
+                    </select>
+                </div>
+                <button class="ghost" id="applySampleBtn" type="button">Apply Sample</button>
+            </div>
+        </div>
+        <div class="hero-panel">
+            <h2>Quick Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <span>Total Heuristics</span>
+                    <strong id="totalCount">10</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Issues Found</span>
+                    <strong id="issueCount">0</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Compliant</span>
+                    <strong id="okCount">0</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Needs Work</span>
+                    <strong id="needsCount">0</strong>
+                </div>
+            </div>
+            <div class="insight">
+                <div>
+                    <span class="meta-label">Overall Usability Score</span>
+                    <div class="insight-value" id="usabilityScore">0%</div>
+                </div>
+                <div>
+                    <span class="meta-label">Design Maturity</span>
+                    <div class="insight-pill" id="maturityLevel">--</div>
+                </div>
+            </div>
+            <button class="primary" id="generateBtn">Generate Report</button>
+            <button class="ghost" id="resetBtn">Reset All</button>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="section">
+            <div class="section-header">
+                <h2>Heuristic Checklist</h2>
+                <p>Record compliance, issues, and improvement suggestions for each heuristic.</p>
+            </div>
+            <div class="heuristic-grid" id="heuristicGrid">
+                <!-- Cards injected by script.js -->
+            </div>
+        </section>
+
+        <section class="section report">
+            <div class="section-header">
+                <h2>Usability Evaluation Report</h2>
+                <p>Auto-generated summary based on your inputs. You can copy and paste this into your record.</p>
+            </div>
+            <div class="report-actions">
+                <button class="primary" id="copyBtn">Copy Report</button>
+                <button class="ghost" id="downloadBtn">Download Report</button>
+            </div>
+            <textarea id="reportOutput" rows="16" placeholder="Your report will appear here after you click Generate Report."></textarea>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Learning Outcomes</h2>
+                <p>What I have learnt from this practical.</p>
+            </div>
+            <ul class="learn-list">
+                <li>Understanding and application of Nielsen's 10 usability heuristics.</li>
+                <li>How to conduct a heuristic evaluation of a user interface.</li>
+                <li>Identifying common usability issues in real-world systems.</li>
+                <li>Structuring and documenting findings in a usability report.</li>
+                <li>Developing design improvement suggestions based on heuristic principles.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <span>Jatin Kumar 22BAI71254</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 1: Memory Recall & Response Time</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="device-toolbar">
+    <button class="device-btn active" data-device="desktop">💻 Desktop</button>
+    <button class="device-btn" data-device="laptop">🖥️ Laptop</button>
+    <button class="device-btn" data-device="tablet">📱 Tablet</button>
+    <button class="device-btn" data-device="android">🤖 Android</button>
+    <button class="device-btn" data-device="iphone">📲 iPhone</button>
+  </div>
+  <div class="main-wrapper">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>🧠 Memory & Reaction Test</h1>
+      </div>
+      <div class="header-right">
+        <button id="theme-toggle" class="theme-btn">🌙 Dark Mode</button>
+      </div>
+    </header>
+    <div class="app-container" id="app-container">
+      <nav class="sidebar">
+        <button class="nav-btn active" data-tab="tests">Experiments</button>
+        <button class="nav-btn" data-tab="analytics">Analytics</button>
+        <button class="nav-btn" data-tab="settings">Settings</button>
+      </nav>
+      <main class="content">
+        <!-- Tests Tab -->
+        <div class="tab-content active" id="tests-tab">
+          <div class="tests-display">
+            <section class="card card-hover" id="memory-card">
+              <h2>Memory Recall Test</h2>
+              <p class="card-desc">Remember items in 30 seconds</p>
+              <div id="memory-phase">
+                <button id="start-memory-btn" class="btn primary">Start Recall Test</button>
+              </div>
+            </section>
+            <section class="card card-hover" id="response-card">
+              <h2>Response Time Test</h2>
+              <p class="card-desc">Test your reaction speed (3 trials)</p>
+              <div id="response-phase">
+                <button id="start-response-btn" class="btn accent">Start Response Test</button>
+              </div>
+            </section>
+          </div>
+          <section class="card card-full">
+            <h2>Results Table</h2>
+            <div id="results-table-container"></div>
+            <button id="restart-btn" class="btn primary">Restart Experiment</button>
+          </section>
+        </div>
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analytics-tab">
+          <section class="card card-full">
+            <h2>Performance Analytics</h2>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">Recall %</div>
+                <div class="stat-value" id="stat-recall">-</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Avg Reaction (ms)</div>
+                <div class="stat-value" id="stat-reaction">-</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Test Status</div>
+                <div class="stat-value" id="stat-status">Not Started</div>
+              </div>
+            </div>
+            <div class="charts-grid">
+              <div class="chart-container">
+                <h3>Recall Performance</h3>
+                <canvas id="recall-chart"></canvas>
+              </div>
+              <div class="chart-container">
+                <h3>Reaction Time Distribution</h3>
+                <canvas id="reaction-chart"></canvas>
+              </div>
+            </div>
+          </section>
+        </div>
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settings-tab">
+          <section class="card card-full">
+            <h2>Settings</h2>
+            <div class="settings-group">
+              <div class="setting-item">
+                <div class="setting-label">Data Persistence</div>
+                <button id="export-data-btn" class="btn secondary">Export Results</button>
+              </div>
+              <div class="setting-item">
+                <div class="setting-label">Clear Results</div>
+                <button id="clear-data-btn" class="btn danger">Clear All Data</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>

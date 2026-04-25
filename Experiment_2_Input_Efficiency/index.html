@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 2: Input Device Efficiency</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Input Device Efficiency Test</h1>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="mouse">🖱️ Mouse</button>
+            <button class="tab-btn" data-tab="keyboard">⌨️ Keyboard</button>
+            <button class="tab-btn" data-tab="touch">👆 Touch</button>
+            <button class="tab-btn" data-tab="results">📊 Results</button>
+        </div>
+
+        <!-- MOUSE TASK -->
+        <div id="mouse" class="tab-content active">
+            <div class="stats">
+                <div class="stat-box"><div class="stat-label">Time</div><div class="stat-value" id="mouseTime">0.0s</div></div>
+                <div class="stat-box"><div class="stat-label">Errors</div><div class="stat-value" id="mouseErrors">0</div></div>
+                <div class="stat-box"><div class="stat-label">Progress</div><div class="stat-value" id="mouseProgress">0/9</div></div>
+            </div>
+            <div class="button-group" id="mouseButtons"></div>
+            <div class="control-buttons">
+                <button class="btn btn-primary" onclick="startMouseTest()">Start</button>
+                <button class="btn btn-secondary" onclick="resetMouseTest()">Reset</button>
+            </div>
+        </div>
+
+        <!-- KEYBOARD TASK -->
+        <div id="keyboard" class="tab-content">
+            <div class="stats">
+                <div class="stat-box"><div class="stat-label">Time</div><div class="stat-value" id="keyboardTime">0.0s</div></div>
+                <div class="stat-box"><div class="stat-label">Errors</div><div class="stat-value" id="keyboardErrors">0</div></div>
+                <div class="stat-box"><div class="stat-label">Accuracy</div><div class="stat-value" id="keyboardAccuracy">0%</div></div>
+            </div>
+            <div class="typing-sentence">The quick brown fox jumps over the lazy dog.</div>
+            <input type="text" class="typing-input" id="typingInput" placeholder="Type here..." spellcheck="false">
+            <div class="control-buttons">
+                <button class="btn btn-primary" onclick="startKeyboardTest()">Start</button>
+                <button class="btn btn-secondary" onclick="resetKeyboardTest()">Reset</button>
+            </div>
+        </div>
+
+        <!-- TOUCH TASK -->
+        <div id="touch" class="tab-content">
+            <div class="stats">
+                <div class="stat-box"><div class="stat-label">Time</div><div class="stat-value" id="touchTime">0.0s</div></div>
+                <div class="stat-box"><div class="stat-label">Taps</div><div class="stat-value" id="touchTaps">0/5</div></div>
+                <div class="stat-box"><div class="stat-label">Action</div><div class="stat-value" id="touchAction">--</div></div>
+            </div>
+            <div class="touch-area" id="touchArea">Tap Here! 👆</div>
+            <div class="control-buttons">
+                <button class="btn btn-primary" onclick="startTouchTest()">Start</button>
+                <button class="btn btn-secondary" onclick="resetTouchTest()">Reset</button>
+            </div>
+        </div>
+
+        <!-- RESULTS TAB -->
+        <div id="results" class="tab-content">
+            <div class="stats">
+                <div class="stat-box"><div class="stat-label">🖱️ Mouse Time</div><div class="stat-value" id="rMouseTime">--</div></div>
+                <div class="stat-box"><div class="stat-label">⌨️ Keyboard Time</div><div class="stat-value" id="rKeyTime">--</div></div>
+                <div class="stat-box"><div class="stat-label">👆 Touch Time</div><div class="stat-value" id="rTouchTime">--</div></div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="resetAllTests()">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

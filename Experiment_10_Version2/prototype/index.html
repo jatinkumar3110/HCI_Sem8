@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exp 10: Smart Student Study Planner (HCI)</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- HCI Analytics & Device Control Panel -->
+  <div class="hci-control-panel">
+    <!-- Device Preview Toolbar -->
+    <div class="device-toolbar">
+      <span class="toolbar-label">Device Preview:</span>
+      <button class="device-btn active" data-device="desktop" title="Desktop (1440×900)">🖥️ Desktop</button>
+      <button class="device-btn" data-device="laptop" title="Laptop (1280×800)">💻 Laptop</button>
+      <button class="device-btn" data-device="tablet" title="iPad (768×1024)">📱 Tablet</button>
+      <button class="device-btn" data-device="android" title="Android (412×915)">🤖 Android</button>
+      <button class="device-btn" data-device="iphone" title="iPhone (375×812)">🍎 iPhone</button>
+      
+      <span class="separator">|</span>
+      
+      <button id="device-rotate-btn" class="device-btn" title="Rotate device (mobile only)">🔄 Rotate</button>
+      <button id="device-fullscreen-btn" class="device-btn" title="Fullscreen mode">⛶ Fullscreen</button>
+      
+      <span class="separator">|</span>
+      
+      <button id="usability-test-btn" class="device-btn" title="Usability testing mode (track interactions)">🧪 Usability Test</button>
+      <span id="usability-indicator" class="usability-indicator" style="display: none;">Recording...</span>
+      
+      <span class="separator">|</span>
+      
+      <button id="analytics-toggle-btn" class="device-btn" title="Show/hide analytics heatmap">📊 Analytics</button>
+    </div>
+  </div>
+
+  <!-- Device Preview Container (Realistic Device Frame) -->
+  <div class="device-preview-wrapper">
+    <!-- Device Frame with Hardware Bezel -->
+    <div class="device-preview-container" id="device-preview-container">
+      <!-- Browser Chrome UI Simulation -->
+      <div class="browser-chrome">
+        <div class="chrome-toolbar">
+          <div class="chrome-buttons">
+            <button class="chrome-btn minimize" title="Minimize">−</button>
+            <button class="chrome-btn maximize" title="Maximize">□</button>
+            <button class="chrome-btn close" title="Close">✕</button>
+          </div>
+          <div class="chrome-address-bar">
+            <span class="protocol">https://</span>
+            <span class="domain">studyplanner.hci.app</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Device Frame (with realistic bezel/hardware styling) -->
+      <div class="device-frame" id="device-frame">
+        <div class="device-notch" id="device-notch"></div>
+        <div class="device-screen">
+          <!-- Application Content -->
+          <div id="app-container" class="app-container desktop-view">
+    <!-- Header with Navigation and Theme Toggle -->
+    <header class="header">
+      <div class="header-content">
+        <h1 class="app-title"><span class="icon">📚</span> Study Planner</h1>
+        <nav class="main-nav" role="navigation" aria-label="Main tabs">
+          <button class="nav-btn active" data-tab="dashboard" aria-controls="dashboard" aria-selected="true">📊 Dashboard</button>
+          <button class="nav-btn" data-tab="tasks" aria-controls="tasks" aria-selected="false">📋 Tasks</button>
+          <button class="nav-btn" data-tab="coach" aria-controls="coach" aria-selected="false">🤖 AI Coach</button>
+          <button class="nav-btn" data-tab="community" aria-controls="community" aria-selected="false">👥 Community</button>
+          <button class="nav-btn" data-tab="institute" aria-controls="institute" aria-selected="false">🏫 Institute</button>
+          <button class="nav-btn" data-tab="analytics" aria-controls="analytics" aria-selected="false">📈 Analytics</button>
+          <button class="nav-btn" data-tab="settings" aria-controls="settings" aria-selected="false">⚙️ Settings</button>
+        </nav>
+        <div class="header-actions">
+          <img id="active-user-avatar" class="active-user-avatar" alt="Active user avatar">
+          <span id="active-user-pill" class="active-user-pill">Local: Guest</span>
+          <button id="demo-student-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Switch to student demo">🎓 Demo Student</button>
+          <button id="demo-mentor-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Switch to mentor demo">🧑‍🏫 Demo Mentor</button>
+          <button id="demo-script-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Start demo walkthrough">🎬 Demo Script</button>
+          <button id="notifications-toggle-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Open notifications">🔔 Notifications</button>
+          <button id="command-palette-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Open command palette">⌘ Command</button>
+          <button id="switch-user-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Switch local user">👤 Switch User</button>
+          <button id="default-preset-btn" class="btn btn-secondary preset-btn" type="button" aria-label="Load default demo preset">✨ Default Preset</button>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Dashboard Tab -->
+      <section id="dashboard" class="tab-panel active" role="tabpanel" aria-labelledby="dashboard-tab">
+        <div class="page-header">
+          <h2>Welcome Back! 👋</h2>
+          <p class="subtitle">Here's your productivity overview for today.</p>
+        </div>
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-content">
+              <div class="stat-label">Tasks Due Today</div>
+              <div class="stat-value" id="tasks-today">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-content">
+              <div class="stat-label">Completed Today</div>
+              <div class="stat-value" id="completed-today">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📌</div>
+            <div class="stat-content">
+              <div class="stat-label">Total Tasks</div>
+              <div class="stat-value" id="total-tasks">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div class="stat-label">Productivity Rate</div>
+              <div class="stat-value" id="productivity-rate">0%</div>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Productivity Progress</h3>
+          <div class="progress-widget">
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="dashboard-progress" style="width: 0%"></div>
+            </div>
+            <div class="progress-text">
+              <span id="progress-done">0</span> / <span id="progress-total">0</span> done
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Command Center</h3>
+          <div class="command-center-grid">
+            <div class="command-card command-risk">
+              <div class="command-label">Delivery Risk</div>
+              <div class="command-value" id="risk-score">Low</div>
+              <p class="command-note" id="risk-note">Risk signals will appear here.</p>
+            </div>
+            <div class="command-card command-consistency">
+              <div class="command-label">Consistency Score</div>
+              <div class="command-value" id="consistency-score">0</div>
+              <p class="command-note" id="consistency-note">Build momentum with daily completion.</p>
+            </div>
+            <div class="command-card command-focus">
+              <div class="command-label">Focus Recommendation</div>
+              <div class="command-value" id="focus-recommendation">Start with high-priority work</div>
+              <p class="command-note">AI-generated from your latest task behavior.</p>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Adaptive Nudge Engine</h3>
+          <div class="nudge-card">
+            <p id="adaptive-nudge-text" class="nudge-text">Your next smart recommendation will appear here.</p>
+            <div id="nudge-stats" class="nudge-stats"></div>
+            <div class="nudge-actions">
+              <button id="nudge-refresh-btn" class="btn btn-secondary" type="button">🔄 Refresh Nudge</button>
+              <button id="nudge-apply-btn" class="btn btn-primary" type="button">✅ Mark Applied</button>
+              <button id="nudge-dismiss-btn" class="btn btn-secondary" type="button">❌ Not Useful</button>
+            </div>
+            <div id="nudge-history-list" class="nudge-history-list"></div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Smart Plan Generator</h3>
+          <p class="subtitle">Create an adaptive study sprint in seconds.</p>
+          <div class="smart-plan-form">
+            <div class="form-group">
+              <label for="plan-exam-date">Target Date</label>
+              <input type="date" id="plan-exam-date">
+            </div>
+            <div class="form-group">
+              <label for="plan-weekly-hours">Weekly Hours</label>
+              <input type="number" id="plan-weekly-hours" min="1" max="80" placeholder="e.g. 18">
+            </div>
+            <div class="form-group wide">
+              <label for="plan-topics">Topics (comma separated)</label>
+              <input type="text" id="plan-topics" placeholder="Algorithms, DBMS, HCI, Aptitude">
+            </div>
+            <div class="form-group wide">
+              <button id="generate-plan-btn" class="btn btn-primary" type="button">⚡ Generate AI Plan</button>
+            </div>
+          </div>
+          <div id="smart-plan-output" class="smart-plan-output"></div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Performance Signals</h3>
+          <div id="performance-signals" class="performance-signals"></div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Upcoming Tasks</h3>
+          <div id="upcoming-tasks" class="tasks-list"></div>
+        </div>
+      </section>
+
+      <!-- Tasks Tab (Kanban Board) -->
+      <section id="tasks" class="tab-panel" role="tabpanel" aria-labelledby="tasks-tab">
+        <div class="page-header">
+          <h2>Task Board 📋</h2>
+          <p class="subtitle">Manage your tasks across different stages.</p>
+        </div>
+        <div class="task-discovery-panel">
+          <input id="task-search-input" type="text" placeholder="Search tasks by title or description...">
+          <div class="task-filter-chips" role="group" aria-label="Task priority filters">
+            <button class="filter-chip active" data-filter="all" type="button">All</button>
+            <button class="filter-chip" data-filter="high" type="button">High</button>
+            <button class="filter-chip" data-filter="normal" type="button">Normal</button>
+            <button class="filter-chip" data-filter="low" type="button">Low</button>
+          </div>
+        </div>
+        <div class="kanban-board">
+          <div class="kanban-column" data-status="todo">
+            <div class="column-header">
+              <h3>📝 To Do</h3>
+              <span class="task-count" id="todo-count">0</span>
+            </div>
+            <ul class="task-list" id="todo-list" role="list"></ul>
+          </div>
+          <div class="kanban-column" data-status="inprogress">
+            <div class="column-header">
+              <h3>⚡ In Progress</h3>
+              <span class="task-count" id="inprogress-count">0</span>
+            </div>
+            <ul class="task-list" id="inprogress-list" role="list"></ul>
+          </div>
+          <div class="kanban-column" data-status="done">
+            <div class="column-header">
+              <h3>✅ Done</h3>
+              <span class="task-count" id="done-count">0</span>
+            </div>
+            <ul class="task-list" id="done-list" role="list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Coach Tab -->
+      <section id="coach" class="tab-panel" role="tabpanel" aria-labelledby="coach-tab">
+        <div class="page-header">
+          <h2>AI Study Coach 🤖</h2>
+          <p class="subtitle">Ask for planning, revision, motivation, and recovery strategies.</p>
+        </div>
+        <div class="coach-layout">
+          <aside class="coach-side-panel">
+            <h3>Quick Prompts</h3>
+            <button class="coach-chip" data-prompt="Plan my day in 3 focused blocks">Plan My Day</button>
+            <button class="coach-chip" data-prompt="Which tasks are highest risk right now?">Show Risk Tasks</button>
+            <button class="coach-chip" data-prompt="Give me a 15-minute recovery plan">Recovery Plan</button>
+            <button class="coach-chip" data-prompt="Motivate me to complete my pending tasks">Motivate Me</button>
+            <button class="coach-chip" data-prompt="Create a weekly revision checklist">Weekly Revision</button>
+            <div class="coach-hint">
+              <strong>Context-aware:</strong> Coach reads your current task board and progress stats.
+            </div>
+          </aside>
+          <div class="coach-chat-panel">
+            <div id="coach-messages" class="coach-messages" aria-live="polite"></div>
+            <div class="coach-input-row">
+              <input id="coach-input" type="text" placeholder="Ask anything about your study strategy..." maxlength="280">
+              <button id="coach-send-btn" class="btn btn-primary" type="button">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Community Tab -->
+      <section id="community" class="tab-panel" role="tabpanel" aria-labelledby="community-tab">
+        <div class="page-header">
+          <h2>Study Community 👥</h2>
+          <p class="subtitle">Manage local study group members and assign accountability challenges.</p>
+          <div id="community-role-hint" class="role-hint"></div>
+        </div>
+        <div class="community-grid">
+          <div class="settings-section">
+            <h3>Add Member</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="member-name">Name</label>
+                <input id="member-name" type="text" placeholder="Member name">
+              </div>
+              <div class="form-group">
+                <label for="member-role">Role</label>
+                <select id="member-role">
+                  <option value="student">Student</option>
+                  <option value="mentor">Mentor</option>
+                </select>
+              </div>
+            </div>
+            <button id="add-member-btn" class="btn btn-primary" type="button">➕ Add Member</button>
+          </div>
+          <div class="settings-section">
+            <h3>Assign Challenge</h3>
+            <div class="form-group">
+              <label for="challenge-member">Member</label>
+              <select id="challenge-member"></select>
+            </div>
+            <div class="form-group">
+              <label for="challenge-title">Challenge</label>
+              <input id="challenge-title" type="text" placeholder="Complete 3 high-priority tasks">
+            </div>
+            <button id="assign-challenge-btn" class="btn btn-secondary" type="button">🎯 Assign</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>Members</h3>
+          <div id="community-members" class="community-list"></div>
+        </div>
+        <div class="settings-section">
+          <h3>Challenge Board</h3>
+          <div id="community-challenges" class="community-list"></div>
+        </div>
+      </section>
+
+      <!-- Institute Tab -->
+      <section id="institute" class="tab-panel" role="tabpanel" aria-labelledby="institute-tab">
+        <div class="page-header">
+          <h2>Institute Dashboard 🏫</h2>
+          <p class="subtitle">Local cohort analytics for demos, mentoring, and progress reviews.</p>
+          <div id="institute-role-hint" class="role-hint"></div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <div class="stat-label">Active Learners</div>
+              <div class="stat-value" id="inst-active-learners">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📉</div>
+            <div class="stat-content">
+              <div class="stat-label">At-Risk Learners</div>
+              <div class="stat-value" id="inst-risk-learners">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+              <div class="stat-label">Avg Completion</div>
+              <div class="stat-value" id="inst-avg-completion">0%</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏁</div>
+            <div class="stat-content">
+              <div class="stat-label">Challenges Closed</div>
+              <div class="stat-value" id="inst-challenge-closed">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>Learner Ranking</h3>
+          <div id="institute-ranking" class="community-list"></div>
+        </div>
+      </section>
+
+      <!-- Analytics Tab -->
+      <section id="analytics" class="tab-panel" role="tabpanel" aria-labelledby="analytics-tab">
+        <div class="page-header">
+          <h2>Analytics 📈</h2>
+          <p class="subtitle">Track your productivity and task metrics.</p>
+        </div>
+        <div class="analytics-grid">
+          <div class="chart-card">
+            <h3>Task Completion Rate</h3>
+            <canvas id="completion-chart" width="300" height="200"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Task Distribution</h3>
+            <canvas id="distribution-chart" width="300" height="200"></canvas>
+          </div>
+          <div class="chart-card wide">
+            <h3>Weekly Productivity</h3>
+            <canvas id="weekly-chart" width="600" height="200"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Tab -->
+      <section id="settings" class="tab-panel" role="tabpanel" aria-labelledby="settings-tab">
+        <div class="page-header">
+          <h2>Settings ⚙️</h2>
+          <p class="subtitle">Customize your planner experience.</p>
+        </div>
+        <div class="settings-section">
+          <h3>Global Preferences</h3>
+          <label class="setting-item">
+            <span>Language</span>
+            <select id="settings-language">
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="es">Spanish</option>
+            </select>
+          </label>
+          <label class="setting-item">
+            <span>Daily Smart Nudges</span>
+            <input type="checkbox" id="settings-nudges" class="toggle-checkbox" checked>
+          </label>
+        </div>
+        <div class="settings-section">
+          <h3>Profile</h3>
+          <div class="form-group">
+            <label for="profile-name">Name</label>
+            <input type="text" id="profile-name" placeholder="Your name">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="profile-uid">UID / Student ID</label>
+              <input type="text" id="profile-uid" placeholder="e.g. 22BAI71254">
+            </div>
+            <div class="form-group">
+              <label for="profile-goal">Primary Goal</label>
+              <input type="text" id="profile-goal" placeholder="Exam prep / coding / placement">
+            </div>
+          </div>
+          <button id="save-profile-btn" class="btn btn-secondary" type="button">💾 Save Profile</button>
+        </div>
+        <div class="settings-section">
+          <h3>Appearance</h3>
+          <label class="setting-item">
+            <span>Dark Mode</span>
+            <input type="checkbox" id="settings-dark-mode" class="toggle-checkbox">
+          </label>
+          <label class="setting-item">
+            <span>Enable Animations</span>
+            <input type="checkbox" id="settings-animations" class="toggle-checkbox" checked>
+          </label>
+        </div>
+        <div class="settings-section">
+          <h3>Accessibility</h3>
+          <label class="setting-item">
+            <span>Font Scale</span>
+            <input id="settings-font-scale" type="range" min="90" max="130" value="100">
+          </label>
+          <label class="setting-item">
+            <span>Dyslexia-Friendly Font</span>
+            <input type="checkbox" id="settings-dyslexia-font" class="toggle-checkbox">
+          </label>
+          <label class="setting-item">
+            <span>High Contrast Mode</span>
+            <input type="checkbox" id="settings-high-contrast" class="toggle-checkbox">
+          </label>
+          <label class="setting-item">
+            <span>Reduced Motion</span>
+            <input type="checkbox" id="settings-reduce-motion" class="toggle-checkbox">
+          </label>
+        </div>
+        <div class="settings-section">
+          <h3>Experiment Lab (A/B)</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="experiment-variant">UI Variant</label>
+              <select id="experiment-variant">
+                <option value="A">Variant A (Baseline)</option>
+                <option value="B">Variant B (Alternative)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="experiment-density">Task Density</label>
+              <select id="experiment-density">
+                <option value="comfy">Comfy</option>
+                <option value="compact">Compact</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button id="apply-experiment-btn" class="btn btn-primary" type="button">🧪 Apply Experiment Mode</button>
+            <button id="log-success-session-btn" class="btn btn-secondary" type="button">👍 Log Successful Session</button>
+            <button id="log-friction-btn" class="btn btn-secondary" type="button">⚠️ Log Friction</button>
+          </div>
+          <div id="experiment-insights" class="experiment-insights"></div>
+        </div>
+        <div class="settings-section">
+          <h3>Data Management</h3>
+          <button id="export-data-btn" class="btn btn-secondary">📥 Export Tasks</button>
+          <button id="clear-tasks-btn" class="btn btn-danger">🗑️ Clear All Tasks</button>
+          <button id="reset-stats-btn" class="btn btn-danger">🔄 Reset Analytics</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add/Edit Task Modal -->
+  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <button class="close-btn" aria-label="Close modal">&times;</button>
+      <h2 id="modal-title">Add New Task</h2>
+      <form id="task-form">
+        <div class="form-group">
+          <label for="task-title">Task Title <span class="required">*</span></label>
+          <input type="text" id="task-title" placeholder="Enter task title" required>
+        </div>
+        <div class="form-group">
+          <label for="task-desc">Description</label>
+          <textarea id="task-desc" placeholder="Add a detailed description (optional)"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-due">Due Date <span class="required">*</span></label>
+            <input type="date" id="task-due" required>
+          </div>
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="low">🟢 Low</option>
+              <option value="normal" selected>🟡 Normal</option>
+              <option value="high">🔴 High</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save Task</button>
+          <button type="button" class="btn btn-secondary" id="cancel-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+        </div> <!-- end device-screen -->
+      </div> <!-- end device-frame -->
+
+      <!-- HCI Analytics Overlay (Heatmap & Metrics) -->
+      <div class="hci-analytics-overlay" id="hci-analytics-overlay" style="display: none;">
+        <div class="heatmap-canvas-wrapper">
+          <canvas id="heatmap-canvas"></canvas>
+        </div>
+        <div class="analytics-metrics-panel">
+          <div class="metrics-header">
+            <h3>📊 UX Metrics</h3>
+            <button class="metrics-close">✕</button>
+          </div>
+          <div class="metrics-content">
+            <div class="metric-item">
+              <span class="metric-label">Interactions</span>
+              <span class="metric-value" id="metric-interactions">0</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Click Density</span>
+              <span class="metric-value" id="metric-density">0</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Session Time</span>
+              <span class="metric-value" id="metric-session">0s</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Task Completion</span>
+              <span class="metric-value" id="metric-completion">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resize Handle (for device frame) -->
+      <div class="device-resize-handle" id="device-resize-handle">⟲</div>
+    </div> <!-- end device-preview-container -->
+  </div> <!-- end device-preview-wrapper -->
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="alert"></div>
+
+  <!-- Notification Drawer -->
+  <div id="notification-drawer" class="notification-drawer" aria-live="polite" style="display:none;">
+    <div class="notification-header">
+      <h3>Notifications</h3>
+      <button id="clear-notifications-btn" class="btn btn-secondary" type="button">Clear</button>
+    </div>
+    <div id="notification-list" class="notification-list"></div>
+  </div>
+
+  <!-- Command Palette -->
+  <div id="command-overlay" class="command-overlay" style="display:none;" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="command-box">
+      <input id="command-input" type="text" placeholder="Type a command (e.g., go tasks, add preset, open coach)...">
+      <div id="command-results" class="command-results"></div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button id="add-task-btn" class="fab" aria-label="Add new task">➕</button>
+
+  <!-- Pomodoro Timer Widget -->
+  <div id="pomodoro-widget" class="pomodoro-widget" style="display: none;">
+    <div class="pomodoro-display">
+      <span class="pomodoro-time">25:00</span>
+      <span class="pomodoro-status">Focus</span>
+    </div>
+    <div class="pomodoro-controls">
+      <button class="pomodoro-btn" id="pomodoro-start">▶</button>
+      <button class="pomodoro-btn" id="pomodoro-reset">↻</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+  <script src="app.js?v=20260325-3"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 3: Interactive UI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Interactive UI Demonstration</h1>
+            <p class="subtitle">Mouse • Keyboard • Touch Interactions with Live Feedback</p>
+        </div>
+
+        <!-- Interactive Sections -->
+        <div class="sections-grid">
+            <!-- MOUSE INTERACTION -->
+            <div class="section mouse-section">
+                <div class="section-title">🖱️ Mouse Interaction</div>
+                
+                <button class="color-button" onclick="changeButtonColor(this)">
+                    Click me to change color!
+                </button>
+
+                <div class="color-palette">
+                    <button class="color-btn" style="background: #FF6B6B;" onclick="setButtonColor('#FF6B6B')" title="Red"></button>
+                    <button class="color-btn" style="background: #4ECDC4;" onclick="setButtonColor('#4ECDC4')" title="Teal"></button>
+                    <button class="color-btn" style="background: #FFE66D;" onclick="setButtonColor('#FFE66D')" title="Yellow"></button>
+                    <button class="color-btn" style="background: #95E1D3;" onclick="setButtonColor('#95E1D3')" title="Mint"></button>
+                    <button class="color-btn" style="background: #F38181;" onclick="setButtonColor('#F38181')" title="Pink"></button>
+                    <button class="color-btn" style="background: #AA96DA;" onclick="setButtonColor('#AA96DA')" title="Purple"></button>
+                </div>
+
+                <div class="message-box" id="mouseMessage">
+                    👆 Click the button or select a color from the palette above!
+                </div>
+            </div>
+
+            <!-- KEYBOARD INTERACTION -->
+            <div class="section keyboard-section">
+                <div class="section-title">⌨️ Keyboard Interaction</div>
+                
+                <input 
+                    type="text" 
+                    class="text-input" 
+                    id="keyboardInput" 
+                    placeholder="Type something here..."
+                    spellcheck="false"
+                >
+
+                <div class="display-area" id="displayArea">
+                    Your text will appear here as you type...
+                </div>
+
+                <div class="char-count">
+                    Characters: <span id="charCount">0</span> | Words: <span id="wordCount">0</span>
+                </div>
+            </div>
+
+            <!-- TOUCH INTERACTION -->
+            <div class="section touch-section">
+                <div class="section-title">👆 Touch Interaction</div>
+                
+                <div class="touch-zone" id="touchZone">
+                    <div>👇 Tap or click here</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Tap for feedback</div>
+                </div>
+
+                <div class="feedback-area" id="touchFeedback">
+                    Touch area ready for interaction...
+                </div>
+            </div>
+        </div>
+
+        <!-- Interaction Log -->
+        <div class="interaction-log">
+            <div class="log-title">📋 Interaction Log</div>
+            <div class="log-content" id="logContent">
+                <div style="color: #999; text-align: center; padding: 20px;">
+                    Interactions will be logged here...
+                </div>
+            </div>
+            <div class="control-buttons">
+                <button class="btn btn-secondary" onclick="clearLog()">Clear Log</button>
+                <button class="btn btn-secondary" onclick="resetAll()">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
